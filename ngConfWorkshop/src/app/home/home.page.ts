@@ -16,7 +16,7 @@ export class HomePage {
 		this.getNewItem().subscribe((response: any) => (this.items = response.results));
 	}
 
-	async showAlert(item) {
+	async showAlert() {
 		const alert = await this.alertCtrl.create({
 			message: 'show an alert',
 			subHeader: 'My subHeader',
