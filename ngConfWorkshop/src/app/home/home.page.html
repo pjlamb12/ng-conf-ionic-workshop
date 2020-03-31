@@ -1,20 +1,39 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-title>
+			Blank
+		</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+	<ion-list>
+		<ion-item
+			(click)="showModal(item)"
+			color="dark"
+			lines="full"
+			*ngFor="let item of items"
+			[routerLink]="['/tabs/tab1/detail', item.id.value]"
+		>
+			<ion-thumbnail slot="start">
+				<img src="{{item.picture.large}}" alt="" />
+			</ion-thumbnail>
+			<p>
+				{{ item.name.first }} {{ item.name.last }}
+			</p>
+		</ion-item>
+	</ion-list>
+	<ion-button (click)="showAlert()">Show Alert</ion-button>
+	<ion-button (click)="showModal()">Show Modal</ion-button>
 </ion-content>
+<ion-footer>
+	<ion-toolbar>
+		<ion-title>Footer One</ion-title>
+	</ion-toolbar>
+	<ion-toolbar>
+		<ion-title>Footer Two</ion-title>
+	</ion-toolbar>
+</ion-footer>
