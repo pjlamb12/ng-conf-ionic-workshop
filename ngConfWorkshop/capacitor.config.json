@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "ngConfWorkshop",
+  "appId": "com.example.app",
+  "appName": "App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

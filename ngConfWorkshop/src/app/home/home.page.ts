@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ModalComponent } from '../modal/modal.component';
@@ -8,11 +9,21 @@ import { ModalComponent } from '../modal/modal.component';
 	templateUrl: 'home.page.html',
 	styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 	items = [];
+	location;
+	photo: string;
 	constructor(private _http: HttpClient, private alertCtrl: AlertController, private modalCtrl: ModalController) {}
 
-	ionViewDidEnter() {
+	async ngOnInit() {
+		const { Geolocation } = Plugins;
+		Geolocation.getCurrentPosition().then((results: any) => {
+			console.log(results);
+			this.location = results;
+		});
+	}
+
+	async ionViewDidEnter() {
 		this.getNewItem().subscribe((response: any) => (this.items = response.results));
 	}
 
@@ -53,5 +64,16 @@ export class HomePage {
 				evt.detail.complete();
 			});
 		}, 2000);
+	}
+
+	async takePhoto() {
+		const { Camera } = Plugins;
+		const image = await Camera.getPhoto({
+			quality: 100,
+			allowEditing: false,
+			resultType: CameraResultType.DataUrl,
+			source: CameraSource.Camera,
+		});
+		this.photo = image.dataUrl;
 	}
 }
